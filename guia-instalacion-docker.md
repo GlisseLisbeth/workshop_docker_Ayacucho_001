@@ -4,8 +4,8 @@ Docker Desktop es una aplicación que facilita la administración de Docker y se
 Puedes revisar de este link:
 https://docs.docker.com/desktop/
 
+Autor: 
 ## Instalar Docker Desktop en Windows
-
 
 1. **Requisitos previos:**
     - Tener una versión de Windows compatible. Docker Desktop es compatible con Windows 10 Pro, Enterprise o Education (build 15063 o superior) o Windows 11. No es compatible con Windows 10 Home.
@@ -44,54 +44,59 @@ Ahora puede comenzar a usar Docker Desktop para ejecutar contenedores en su sist
     wsl --set-default ubuntu
 ```
 
-## Instalar Docker en Ubuntu
+## Instalar Docker Desktop en Ubuntu
 
-> Docker Desktop es una aplicación específica para macOS y Windows, y no
-> está disponible para Linux, incluyendo Ubuntu. Sin embargo, puedes
-> utilizar Docker en Ubuntu
+1.  **Requisitos previos:**
+- Cumplir con los requisitos del sistema: https://docs.docker.com/desktop/install/linux-install/#system-requirements
+- Tener una versión de 64 bits de Ubuntu Lunar Lobster 23.04 o Ubuntu Jammy Jellyfish 22.04 (LTS). Docker Desktop es compatible con la arquitectura x86_64(o amd64).
 
-Para instalar Docker en Ubuntu, puedes seguir estos pasos:
-
-**Nota**: A partir de la versión de Ubuntu 20.04 en adelante, Docker ha sido reemplazado por containerd como el runtime predeterminado del sistema. Sin embargo, puedes seguir instalando Docker en Ubuntu 20.04 si lo prefieres. Los siguientes pasos te mostrarán cómo hacerlo.
-
-**Instalación de Docker en Ubuntu 20.04 o versiones posteriores:**
-
-1.  Abre una terminal en tu sistema Ubuntu. 
-2.  Actualiza la lista de paquetes de tu sistema para asegurarte de que esté al día:
+2.  **Descargar Docker Desktop:**
+    -   Abre un navegador web y ve al sitio web oficial de Docker: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop).
+    -   Haz clic en el botón "Download for Linnux" para iniciar la descarga del archivo de instalación de Docker Desktop.
+3.  **Instala Docker Desktop:**
+ Instale el paquete con apt de la siguiente manera:
 ```shell
-    sudo apt update
-```
-3.  Instala las dependencias necesarias para permitir que Ubuntu utilice paquetes a través de HTTPS:
-```shell
-    sudo apt install apt-transport-https ca-certificates curl software-properties-common
-```
-4.  Descarga la clave GPG oficial de Docker:
-```shell
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-```
-5.  Agrega el repositorio de Docker a tus fuentes de paquetes:
-```shell
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-6.  Actualiza nuevamente la lista de paquetes para incluir el repositorio de Docker:
-```shell
-    sudo apt update
-```
-7.  Finalmente, instala Docker:
-```shell
-    sudo apt install docker-ce docker-ce-cli containerd.io
-```
-8.  Una vez que la instalación se complete, inicia el servicio Docker y habilita su inicio automático en el arranque:
-```shell
-    sudo systemctl start docker
-    sudo systemctl enable docker
-```
-9.  Verifica que Docker se haya instalado correctamente ejecutando el siguiente comando, que debería mostrar la información de la versión de Docker:
-```shell
-    docker --version
+    $ sudo apt-get update
+    $ sudo apt-get install ./docker-desktop-<version>-<arch>.deb
 ```
 
-Puedes comenzar a utilizar Docker para crear y ejecutar contenedores.
+ 4. **Configuración de Docker:**
+Hay algunos pasos de configuración posteriores a la instalación que se realizan a través del script posterior a la instalación contenido en el paquete deb.
+
+El script posterior a la instalación:
+
+- Establece la capacidad en el binario de Docker Desktop para asignar puertos privilegiados y establecer límites de recursos.
+- Agrega un nombre DNS para Kubernetes a /etc/hosts.
+- Crea un enlace simbólico desde /usr/local/bin/com.docker.clia /usr/bin/docker. Esto se debe a que la CLI clásica de Docker está instalada en /usr/bin/docker. El instalador de Docker Desktop también instala un binario de Docker CLI que incluye capacidades de integración en la nube y es esencialmente un contenedor para Compose CLI, en /usr/local/bin/com.docker.cli. El enlace simbólico garantiza que el contenedor pueda acceder a la CLI clásica de Docker.
+
+ 5. **Inicio de Docker:**
+Para iniciar Docker Desktop para Linux, busque Docker Desktop en el menú Aplicaciones y ábralo. Esto inicia el ícono del menú de Docker y abre el Panel de Docker, informando el estado de Docker Desktop.
+
+Alternativamente, abra una terminal y ejecute:
+```shell
+    $ systemctl --user start docker-desktop
+```
+Cuando se inicia Docker Desktop, crea un contexto dedicado que Docker CLI puede usar como destino y lo establece como el contexto actual en uso. 
+
+ 6. **Verificación de la instalación:**
+Abra una ventana de Terminal y ejecute el siguiente comando para verificar que Docker esté funcionando correctamente:
+```shell
+    $ docker compose version
+    Docker Compose version v2.17.3
+
+    $ docker --version
+    Docker version 23.0.5, build bc4487a
+
+    $ docker version
+    Client: Docker Engine - Community
+    Cloud integration: v1.0.31
+    Version:           23.0.5
+    API version:       1.42
+    <...>
+```
+
+ 7. **Uso de Docker:**
+Para permitir que Docker Desktop se inicie al iniciar sesión, en el menú de Docker, seleccione Configuración > General > Iniciar Docker Desktop cuando inicie sesión .
 
 ## Instalar Docker Desktop en macOS
 
@@ -103,7 +108,7 @@ Puedes comenzar a utilizar Docker para crear y ejecutar contenedores.
     -   Haz clic en el botón "Download for Mac" para iniciar la descarga del archivo de instalación de Docker Desktop.
 3.  **Instala Docker Desktop:**
  Una vez que se complete la descarga, haz doble clic en el archivo descargado llamado "Docker.dmg" para montar la imagen del disco.
-4.  **Instala Docker Desktop:**
+4.  **Instala Docker Desktop en Applications:**
 Se abrirá una ventana del Finder que contiene la aplicación Docker. Arrastra la aplicación Docker a la carpeta "Applications" para instalarla.
 5.  **Inicia Docker Desktop:**
 Ve a la carpeta "Applications" en tu Mac y haz doble clic en la aplicación Docker para iniciarla.
