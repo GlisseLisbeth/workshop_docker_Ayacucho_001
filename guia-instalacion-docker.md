@@ -4,7 +4,8 @@ Docker Desktop es una aplicación que facilita la administración de Docker y se
 Puedes revisar de este link:
 https://docs.docker.com/desktop/
 
-Autor: 
+Autor: [Docker](https://www.docker.com/)
+
 ## Instalar Docker Desktop en Windows
 
 1. **Requisitos previos:**

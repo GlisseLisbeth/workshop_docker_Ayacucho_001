@@ -1,146 +1,153 @@
 # Comandos
 
-Puede darle una vista rápida al ChetSheet: https://docs.docker.com/get-started/docker_cheatsheet.pdf
+- Información básica de Docker
 
-Para obtener más información sobre cualquier comando específico:
-```shell
-docker <command> --help
+```bash
+# Devuelve la versión de Docker
+docker version
+
+# Más detalle sobre la configuración de Docker
+docker info
+
+# Mostrar comando que podemos usar en Docker
+docker
 ```
 
-## Contenedores
+- Contenedores
 
-Para crear y ejecutar un contenedor a partir de una imagen. **Nota**: Este es un ejemplo específico, puede haber muchas opciones, dependiendo de lo que quiere crear y ejecutar.
-```shell
-docker run -d -p <puerto_host>:<puerto_contenedor> <nombre de la imagen>
-```
+```bash
+# Ejecutar Servidor Web Nginx
+docker run -p 80:80 nginx
 
-Para ver la ejecución del contenedor lo que hace por consola
-```shell
-docker logs <nombre o ID del contenedor>
-```
+# Ejecutar Servidor Web Nginx en diferentes puertos
+docker run -p 81:80 nginx
 
-Para ver la lista de contenedores en ejecucción
-```shell
+# Lista de contenedores en ejecucción
 docker ps
-```
 
-Para ver la lista de todos los contenedores en ejecucción y detenidos
-```shell
+# Lista de contenedores en ejecucción y detenidos
 docker ps -a
-```
 
-Para iniciar un contenedor
-```shell
+# Iniciar un contenedor
 docker start "nombrecontenedor"
-```
 
-Para bajar o detener un contenedor 
-```shell
+# Detener un contenedor 
 docker stop <nombre o ID del contenedor>
-```
 
-Para eliminar un contenedor
-```shell
+# Eliminar un contenedor
 docker rm <nombre o ID del contenedor>
-```
 
-Para crear redes personalizadas para conectar contenedores
-```shell
+# Forzar una eliminación de un contenedor
+docker rm -f <nombre o ID del contenedor>
+# Crear redes y conectar contenedores
 docker network create my_network
 ```
 
-## Imágenes
-Nos devuelve el listado de las imagenes: docker images (o docker image ls)
+- Imágenes
 
-```shell
+```bash
+#Listado de las imagenes
 docker image ls
 ```
 
+- Administrar múltiples contenedores: nginx, MySQl and httpd
 
-Para descargar una imagen de Docker desde un registro público o privado. **Nota**:Puedes especificar la imagen completa o solo el nombre y la etiqueta.
-```shell
-docker pull <nombre de la imagen>:<tag>
+```bash
+# Ejecutar contenedor nginx
+docker run --name nginx  -p 80:80 --d nginx
+# Pruebas Nginx
+curl localhost:80
+
+# Ejecutar contenedor mysql, usar password random
+docker run -p 3306:3306 -d --name mysql --env MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+# Pruebas MySQL
+# Chequear MySQL password
+docker logs <container-id> | grep PASSWORD
+# Ingrese el contenedor MySQL con bash
+docker exec -it <container-id> bash
+# Conectar a MySQL Server
+mysql -u root -p <PASSWORD>
+
+# Ejecutar httpd container
+docker run -p 8080:80 --name httpd -d httpd
+# Prueba httpd
+curl localhost:8080
+
+# Eliminar imagenes y contenedores
+docker stop nginx, httpd, mysql
+docker rm nginx, httpd, mysql
+docker rmi nginx, httpd, mysql
 ```
 
-Para crear una imagen de Docker a partir de un Dockerfile
-```shell
-docker build -t <nombre de la imagen> <path_to_dockerfile_directory>
+- Dockerfiles: Creando nuestras propias imagenes
+
+```Dockerfile
+# Crear Archivo Dockerfile
+FROM ubuntu
+MAINTAINER glisse glissejorge@gmail.com
+RUN apt-get update
+CMD ["echo", "Hola mundo desde mi primera imagen de Docker"]
 ```
 
-Para guardar una imagen de Docker en un archivo tar para su posterior transporte o almacenamiento
-```shell
-docker save -o <output_file.tar> <nombre de la imagen>:<tag>
+```bash
+# Ejecutar Dockerfile
+docker image build -t myimage:1.0.0 .
+docker image ls
+# Construir el contenedor con nuestra iamgen myimage
+docker run myimage:1.0.0
 ```
 
-Para cargar una imagen previamente guardada desde un archivo tar en Docker
-```shell
-docker load -i <input_file.tar>
+- DockerHub: Publicar nuestra imagen a DockerHub
+
+```bash
+docker login
+docker image tag myimage:1.0.0 glisselisbeth/myimage:1.0.0
+docker image push glisselisbeth/myimage:1.0.0
+# Chequea tu imagen en DockerHub: https://hub.docker.com/
 ```
 
-Para mostrar el historial de una imagen de Docker
-```shell
-docker history <output_file.tar> <nombre de la imagen>:<tag>
+- Dockeriza tu aplicacion web (OPTIONAL)
+
+```Dockerfile
+# Crear Archivo Dockerfile
+
+# Utilice runtime de Node como imagen principal
+FROM node:lts
+# Establecer el directorio /app
+WORKDIR /app
+# Copie el contenido del directorio actual en el contenedor /app
+ADD . /app
+# Poner el puerto 80 al contenedor.
+EXPOSE 80
+# Ejecutar app.js usando node cuando se lanza un contenedor
+CMD ["node", "app.js"]
 ```
 
-Para eliminar una imagen
-```shell
-docker rmi <nombre de la imagen>
+```bash
+# Ejecutar Dockerfile
+docker build -t node-app:0.1 .
+docker run -p 4000:80 --name my-app node-app:0.1
 ```
 
-Para eliminar imagenes no utilizadas y liberar espacio
-```shell
-docker image prune
-```
-## Volúmenes
+- Volúmenes para almacenar datos de la base de datos en forma persistente
 
-Para mostrar una lista de volúmenes
-```shell
-docker volume ls
-```
+```bash
+# Crear un volumen de Docker "mysql_data"
+docker volume create mysql_data
 
-Para crear un nuevo volumen
-```shell
-docker volume create <nombre_del_volumen>
-```
 
-Para mostrar informacion detallada del volumen
-```shell
-docker volume create <nombre_del_volumen>
-```
+# Run the image:
+docker run -d 
+-e MYSQL_ROOT_PASSWORD=my-secret-pw \
+-v -v mysql_data:/var/lib/mysql \
+mysql:latest
 
-Para eliminar un volumen
-```shell
-docker volume rm <nombre_del_volumen>
+# Conectarse con la base de datos
+docker exec -it <id del contenedor> mysql -u root -p
+
+# Para detener o eliminar el contenedor
+docker stop <id del contenedor>
+docker rm <id del contenedor>
 ```
 
-Para eliminar todos los volumenes no utilizados
-```shell
-docker volume prune
-```
-
-Para asignar un volumen a un contenedor al crearlo
-```shell
-docker run -v <nombre_del_volumen>:<ruta_en_el_contenedor> <nombre_de_la_imagen>
-```
-
-Para montar un volumen de otro contenedor en uno nuevo.
-```shell
-docker run --volume-from <nombre_del_contenedor_fuente> <nombre_de_la_imagen>
-```
-
-Para copiar archivos o directorios entre el sistema anfitrión y un contenedor o entre contenedores
-```shell
-docker cp <archivo_o_directorio_origen> <nombre_del_contenedor>:<destino_en_el_contenedor>
-```
-
-
-
-
-
-
-
-
-
-
-
-
+Referencia: [Cheatsheet](https://docs.docker.com/get-started/docker_cheatsheet.pdf)
