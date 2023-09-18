@@ -1,10 +1,8 @@
 # Instalación de Docker Desktop
 Docker Desktop es una aplicación que facilita la administración de Docker y se puede instalar en Mac, Linux o Windows. 
 
-Puedes revisar de este link:
-https://docs.docker.com/desktop/
-
-Autor: [Docker](https://www.docker.com/)
+**Nota:** 
+- Crear cuenta de Docker Hub en https://hub.docker.com/
 
 ## Instalar Docker Desktop en Windows
 
@@ -122,3 +120,7 @@ Ve a la carpeta "Applications" en tu Mac y haz doble clic en la aplicación Dock
 Una vez que Docker esté en funcionamiento, puedes abrir una terminal en tu Mac y comenzar a utilizar comandos de Docker para crear y ejecutar contenedores.
 
 Ahora tienes Docker Desktop instalado y funcionando en tu Mac, lo que te permite trabajar con contenedores de Docker de manera fácil y conveniente.
+
+Referencia: 
+- [Manual Oficial del Docker](https://docs.docker.com/desktop/) by Docker
+- [hands-on-to-docker](https://github.com/edithturn/hands-on-to-docker) by Edith Puclla

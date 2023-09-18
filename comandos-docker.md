@@ -126,7 +126,7 @@ CMD ["node", "app.js"]
 ```bash
 # Ejecutar Dockerfile
 docker build -t node-app:0.1 .
-docker run -p 4000:80 --name my-app node-app:0.1
+docker run -p 3000:3000  --name my-app node-app:0.1
 ```
 
 - Volúmenes para almacenar datos de la base de datos en forma persistente

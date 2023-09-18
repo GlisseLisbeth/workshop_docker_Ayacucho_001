@@ -15,3 +15,12 @@ Para comenzar con este taller, es necesario tener Docker instalado.
 ## Manos a la obra
 
 - [Comandos Básicos de Docker](comandos-docker.md)
+- [Demo NGINX con Docker - Usando Contenedores](01-demo-nginx-docker\README.md)
+- [Demo Node.JS con Docker - Creando mi propia imagen](02-demo-app-nodejs-docker\README.md)
+- [Demo Data Mysql con Docker- Entendiendo volumenes](03-demo-data-mysql\README.md)
+
+**Nota:**
+- Crear cuenta de Docker Hub en https://hub.docker.com/
+- Tener instalado [Git](https://git-scm.com/downloads)
+- Tener instalado [Node.Js](https://nodejs.org/es/download)
+- Tener instalado [Docker Desktop](guia-instalacion-docker.md) 
