@@ -1,7 +1,5 @@
 # NGINX con Docker
 
-## NGINX usando Docker
-
 ```bash
 #Descargar imagen desde Docker Hub
 docker pull nginx
