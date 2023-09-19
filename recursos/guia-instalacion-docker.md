@@ -123,4 +123,3 @@ Ahora tienes Docker Desktop instalado y funcionando en tu Mac, lo que te permite
 
 Referencia: 
 - [Manual Oficial del Docker](https://docs.docker.com/desktop/) by Docker
-- [hands-on-to-docker](https://github.com/edithturn/hands-on-to-docker) by Edith Puclla
