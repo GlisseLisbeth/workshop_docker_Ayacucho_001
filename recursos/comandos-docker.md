@@ -39,6 +39,7 @@ docker rm <nombre o ID del contenedor>
 
 # Forzar una eliminación de un contenedor
 docker rm -f <nombre o ID del contenedor>
+
 # Crear redes y conectar contenedores
 docker network create my_network
 ```
@@ -55,21 +56,26 @@ docker image ls
 ```bash
 # Ejecutar contenedor nginx
 docker run --name nginx  -p 80:80 --d nginx
+
 # Pruebas Nginx
 curl localhost:80
 
+
 # Ejecutar contenedor mysql, usar password random
 docker run -p 3306:3306 -d --name mysql --env MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
-# Pruebas MySQL
+
 # Chequear MySQL password
 docker logs <container-id> | grep PASSWORD
+
 # Ingrese el contenedor MySQL con bash
 docker exec -it <container-id> bash
+
 # Conectar a MySQL Server
 mysql -u root -p <PASSWORD>
 
 # Ejecutar httpd container
 docker run -p 8080:80 --name httpd -d httpd
+
 # Prueba httpd
 curl localhost:8080
 
@@ -93,6 +99,7 @@ CMD ["echo", "Hola mundo desde mi primera imagen de Docker"]
 # Ejecutar Dockerfile
 docker image build -t myimage:1.0.0 .
 docker image ls
+
 # Construir el contenedor con nuestra iamgen myimage
 docker run myimage:1.0.0
 ```
@@ -103,6 +110,7 @@ docker run myimage:1.0.0
 docker login
 docker image tag myimage:1.0.0 glisselisbeth/myimage:1.0.0
 docker image push glisselisbeth/myimage:1.0.0
+
 # Chequea tu imagen en DockerHub: https://hub.docker.com/
 ```
 
@@ -113,12 +121,16 @@ docker image push glisselisbeth/myimage:1.0.0
 
 # Utilice runtime de Node como imagen principal
 FROM node:lts
+
 # Establecer el directorio /app
 WORKDIR /app
+
 # Copie el contenido del directorio actual en el contenedor /app
 ADD . /app
+
 # Poner el puerto 80 al contenedor.
 EXPOSE 80
+
 # Ejecutar app.js usando node cuando se lanza un contenedor
 CMD ["node", "app.js"]
 ```
@@ -134,7 +146,6 @@ docker run -p 3000:3000  --name my-app node-app:0.1
 ```bash
 # Crear un volumen de Docker "mysql_data"
 docker volume create mysql_data
-
 
 # Run the image:
 docker run -d 
