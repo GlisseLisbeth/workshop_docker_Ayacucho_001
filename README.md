@@ -1,6 +1,4 @@
 # Docker Workshop
-
-## Explorando contenedores, imágenes y volúmenes
 <h1 align="center"> WORKSHOP: Explorando contenedores, imágenes y volúmenes</h1>
 El propósito del repositorio es proporcionar una referencia para los miembros de la comunidad, proporcionandolos como guía.
 ![logo-docker](https://github.com/GlisseLisbeth/workshop_docker_Ayacucho_001/blob/main/recursos/logo-docker-ayacucho.png)
