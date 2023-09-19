@@ -161,4 +161,6 @@ docker stop <id del contenedor>
 docker rm <id del contenedor>
 ```
 
-Referencia: [Cheatsheet](https://docs.docker.com/get-started/docker_cheatsheet.pdf)
+Referencia: 
+- [Cheatsheet](https://docs.docker.com/get-started/docker_cheatsheet.pdf) by Docker
+- [hands-on-to-docker](https://github.com/edithturn/hands-on-to-docker) by Edith Puclla
