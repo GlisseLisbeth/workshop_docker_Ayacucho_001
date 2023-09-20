@@ -90,9 +90,8 @@ docker rmi nginx, httpd, mysql
 ```Dockerfile
 # Crear Archivo Dockerfile
 FROM ubuntu
-MAINTAINER glisse glissejorge@gmail.com
 RUN apt-get update
-CMD ["echo", "Hola mundo desde mi primera imagen de Docker"]
+CMD ["echo", "Hola Docker Community Ayacucho desde mi primera imagen de Docker"]
 ```
 
 ```bash
