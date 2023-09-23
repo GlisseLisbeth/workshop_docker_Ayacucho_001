@@ -1,9 +1,6 @@
 # Mysql data con Docker
 
 ```bash
-# Descargar imagen MySQL
-docker pull mysql
-
 # Construir imagen de nodejs
 docker run -d --name mi-mysql-container -e MYSQL_ROOT_PASSWORD=my-data-pass -v /data/mysql-data:/var/lib/mysql mysql
 
