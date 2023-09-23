@@ -29,7 +29,7 @@ docker ps
 docker ps -a
 
 # Iniciar un contenedor
-docker start "nombrecontenedor"
+docker start <nombre o ID del contenedor>
 
 # Detener un contenedor 
 docker stop <nombre o ID del contenedor>
@@ -40,6 +40,12 @@ docker rm <nombre o ID del contenedor>
 # Forzar una eliminación de un contenedor
 docker rm -f <nombre o ID del contenedor>
 
+# Eliminar todos los contenedores detenidos
+docker container prune
+
+# Eliminar todos los contenedores incluso en ejecucción
+docker rm -f $(docker ps -aq)
+
 # Crear redes y conectar contenedores
 docker network create my_network
 ```
@@ -47,8 +53,12 @@ docker network create my_network
 - Imágenes
 
 ```bash
-#Listado de las imagenes
+# Listado de las imagenes
 docker image ls
+# Eliminar imagenes no utilizadas
+docker image prune
+# Eliminar todas las imagenes
+docker rmi $(docker images -q)
 ```
 
 - Administrar múltiples contenedores: nginx, MySQl and httpd
@@ -62,16 +72,13 @@ curl localhost:80
 
 
 # Ejecutar contenedor mysql, usar password random
-docker run -p 3306:3306 -d --name mysql --env MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
-
-# Chequear MySQL password
-docker logs <container-id> | grep PASSWORD
+docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=mysecretpw mysql
 
 # Ingrese el contenedor MySQL con bash
 docker exec -it <container-id> bash
 
 # Conectar a MySQL Server
-mysql -u root -p <PASSWORD>
+mysql -u root -p
 
 # Ejecutar httpd container
 docker run -p 8080:80 --name httpd -d httpd
@@ -80,9 +87,9 @@ docker run -p 8080:80 --name httpd -d httpd
 curl localhost:8080
 
 # Eliminar imagenes y contenedores
-docker stop nginx, httpd, mysql
-docker rm nginx, httpd, mysql
-docker rmi nginx, httpd, mysql
+docker stop nginx httpd mysql
+docker rm nginx httpd mysql
+docker rmi nginx httpd mysql
 ```
 
 - Dockerfiles: Creando nuestras propias imagenes
@@ -97,7 +104,7 @@ CMD ["echo", "Hola Docker Community Ayacucho desde mi primera imagen de Docker"]
 ```bash
 # Ejecutar Dockerfile
 docker image build -t myimage:1.0.0 .
-docker image ls
+docker images
 
 # Construir el contenedor con nuestra iamgen myimage
 docker run myimage:1.0.0
@@ -147,10 +154,7 @@ docker run -p 3000:3000  --name my-app node-app:0.1
 docker volume create mysql_data
 
 # Run the image:
-docker run -d 
--e MYSQL_ROOT_PASSWORD=my-secret-pw \
--v -v mysql_data:/var/lib/mysql \
-mysql:latest
+docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=mysecretpw -v mysql_data:/var/lib/mysql -d mysql:latest
 
 # Conectarse con la base de datos
 docker exec -it <id del contenedor> mysql -u root -p
